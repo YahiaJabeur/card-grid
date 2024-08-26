@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import './App.css';
 import { Error } from './components/Error';
 import { Grid } from './components/Grid';
@@ -20,8 +21,8 @@ const App: React.FC = () => {
       {loading && <LoadingIndicator />}
       {error && <Error message={error} />}
       <Grid gifs={gifs} onCardClick={handleCardClick} />
-      {selectedGif && <Modal gif={selectedGif} onClose={handleCloseModal} />}
       {!loading && hasMore && <LoadMoreButton onClick={loadGifs} isLoading={loadingMore} />}
+      {selectedGif && <Modal gif={selectedGif} onClose={handleCloseModal} />}
     </div>
   );
 };
