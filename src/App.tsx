@@ -9,7 +9,7 @@ import { Modal } from './components/Modal';
 import { useFetchGiphies } from './hooks/useFetchGiphies';
 import { GifType } from './types/GifType';
 
-const App: React.FC = () => {
+const App = () => {
   const { gifs, loading, error, loadingMore, loadGifs, hasMore } = useFetchGiphies();
   const [selectedGif, setSelectedGif] = useState<GifType | null>(null);
 
