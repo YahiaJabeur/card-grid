@@ -7,22 +7,22 @@ interface UseFetchGiphiesResult {
   gifs: GifType[];
   loading: boolean;
   loadingMore: boolean;
-  error: string | null;
-  loadGifs: () => void;
-  hasMore: boolean;
+  error: string | undefined;
+  loadMore: () => void;
+  hasNext: boolean;
 }
 
 export const useFetchGiphies = (): UseFetchGiphiesResult => {
   const [gifs, setGifs] = useState<GifType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>();
   const [loadingMore, setLoadingMore] = useState(false);
   const [offset, setOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
 
   const fetchGifs = useCallback(
     async (isLoadMore = false) => {
-      setError(null);
+      setError(undefined);
       setLoading(isLoadMore ? false : true);
       setLoadingMore(isLoadMore);
 
@@ -52,12 +52,12 @@ export const useFetchGiphies = (): UseFetchGiphiesResult => {
     fetchGifs();
   }, [fetchGifs]);
 
-  const loadGifs = () => {
+  const loadMore = () => {
     setOffset((prevOffset) => prevOffset + LIMIT);
     fetchGifs(true);
   };
 
-  const hasMore = gifs.length < totalCount;
+  const hasNext = gifs.length < totalCount;
 
-  return { gifs, loading, error, loadGifs, loadingMore, hasMore };
+  return { gifs, loading, error, loadMore, loadingMore, hasNext };
 };

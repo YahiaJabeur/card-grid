@@ -10,7 +10,7 @@ import { useFetchGiphies } from './hooks/useFetchGiphies';
 import { GifType } from './types/GifType';
 
 const App = () => {
-  const { gifs, loading, error, loadingMore, loadGifs, hasMore } = useFetchGiphies();
+  const { gifs, loading, error, loadingMore, loadMore, hasNext } = useFetchGiphies();
   const [selectedGif, setSelectedGif] = useState<GifType | null>(null);
 
   const handleCardClick = (gif: GifType) => setSelectedGif(gif);
@@ -21,7 +21,7 @@ const App = () => {
       {loading && <LoadingIndicator />}
       {error && <Error message={error} />}
       <Grid gifs={gifs} onCardClick={handleCardClick} />
-      {!loading && hasMore && <LoadMoreButton onClick={loadGifs} isLoading={loadingMore} />}
+      {!loading && hasNext && <LoadMoreButton onClick={loadMore} isLoading={loadingMore} />}
       {selectedGif && <Modal gif={selectedGif} onClose={handleCloseModal} />}
     </div>
   );
