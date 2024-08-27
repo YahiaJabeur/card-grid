@@ -35,7 +35,7 @@ interface LoadingIndicatorProps {
 
 export const LoadingIndicator = ({ message = 'Loading...' }: LoadingIndicatorProps) => {
   return (
-    <LoaderContainer role="status" aria-live="polite">
+    <LoaderContainer role="status" aria-live="polite" data-testid="loading-indicator">
       <Spinner aria-hidden="true" />
       <span>{message}</span>
     </LoaderContainer>

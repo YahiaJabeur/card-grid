@@ -21,29 +21,44 @@ const Overlay = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 80%;
-  max-width: 600px;
+  width: 80vw;
+  height: 80vh;
+  max-width: 600px; /* Optional: Restrict the maximum width */
   background: white;
-  padding: 16px;
   border-radius: 8px;
   position: relative;
+  overflow: hidden;
 `;
 
 const CloseButton = styled.button`
-  color: black;
-  opacity: 0.5;
   position: absolute;
   top: 8px;
   right: 8px;
-  background: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: 1;
+  transition: background 0.3s;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
 `;
 
 const ModalImage = styled.img`
   width: 100%;
   object-fit: cover;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
 `;
 
 const ModalTitle = styled.h2`
@@ -54,8 +69,10 @@ const ModalTitle = styled.h2`
 
 export const Modal = ({ gif, onClose }: ModalProps) => (
   <Overlay>
-    <ModalContainer>
-      <CloseButton onClick={onClose}>&times;</CloseButton>
+    <ModalContainer data-testid="modal">
+      <CloseButton data-testid="close-button" onClick={onClose}>
+        &times;
+      </CloseButton>
       <ModalImage src={gif.images.original.url} alt={gif.title} />
       <ModalTitle>{gif.title}</ModalTitle>
     </ModalContainer>

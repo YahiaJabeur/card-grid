@@ -27,7 +27,7 @@ interface ErrorProps {
 
 export const Error = ({ message }: ErrorProps) => {
   return (
-    <ErrorContainer role="alert" aria-live="assertive">
+    <ErrorContainer role="alert" aria-live="assertive" data-testid="error">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1 18h-2v-2h2v2zm0-4h-2V6h2v8z" />
       </svg>
