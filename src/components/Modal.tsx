@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import styled, { keyframes } from 'styled-components';
 
 import { GifType } from '../types/GifType';
@@ -78,13 +79,16 @@ const ModalImage = styled.img`
   border-top-left-radius: 8px;
 `;
 
-export const Modal = ({ gif, onClose }: ModalProps) => (
-  <Overlay>
-    <ModalContainer role="dialog" aria-labelledby="modal-title" data-testid="modal">
-      <CloseButton aria-label="Close modal" data-testid="close-button" onClick={onClose}>
-        &times;
-      </CloseButton>
-      <ModalImage src={gif.images.original.url} alt={gif.title} />
-    </ModalContainer>
-  </Overlay>
-);
+export const Modal = ({ gif, onClose }: ModalProps) => {
+  return ReactDOM.createPortal(
+    <Overlay>
+      <ModalContainer role="dialog" aria-labelledby="modal-title" data-testid="modal">
+        <CloseButton aria-label="Close modal" data-testid="close-button" onClick={onClose}>
+          &times;
+        </CloseButton>
+        <ModalImage src={gif.images.original.url} alt={gif.title} />
+      </ModalContainer>
+    </Overlay>,
+    document.getElementById('root')!,
+  );
+};
