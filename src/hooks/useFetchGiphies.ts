@@ -20,41 +20,39 @@ export const useFetchGiphies = (): UseFetchGiphiesResult => {
   const [offset, setOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
 
-  const fetchGifs = useCallback(
-    async (isLoadMore = false) => {
-      setError(undefined);
-      setLoading(isLoadMore ? false : true);
-      setLoadingMore(isLoadMore);
+  const fetchGifs = useCallback(async (newOffset: number, isLoadMore = false) => {
+    setError(undefined);
+    setLoading(isLoadMore ? false : true);
+    setLoadingMore(isLoadMore);
 
-      try {
-        const response = await fetch(`${BASE_URL}${trendingPath}?api_key=${API_KEY}&limit=${LIMIT}&offset=${offset}`);
-        const data = await response.json();
+    try {
+      const response = await fetch(`${BASE_URL}${trendingPath}?api_key=${API_KEY}&limit=${LIMIT}&offset=${newOffset}`);
+      const data = await response.json();
 
-        if (!response.ok) {
-          throw new Error(data.message || 'Something went wrong while fetching GIFs');
-        }
-
-        setTotalCount(data.pagination.total_count);
-
-        setGifs((prevGifs) => (isLoadMore ? [...prevGifs, ...data.data] : data.data));
-      } catch (err: unknown) {
-        console.error(err);
-        setError('Failed to fetch GIFs');
-      } finally {
-        setLoading(false);
-        setLoadingMore(false);
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong while fetching GIFs');
       }
-    },
-    [offset],
-  );
+
+      setTotalCount(data.pagination.total_count);
+
+      setGifs((prevGifs) => (isLoadMore ? [...prevGifs, ...data.data] : data.data));
+    } catch (err: unknown) {
+      console.error(err);
+      setError('Failed to fetch GIFs');
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  }, []);
 
   useEffect(() => {
-    fetchGifs();
+    fetchGifs(0);
   }, [fetchGifs]);
 
   const loadMore = () => {
-    setOffset((prevOffset) => prevOffset + LIMIT);
-    fetchGifs(true);
+    const newOffset = offset + LIMIT;
+    setOffset(newOffset);
+    fetchGifs(newOffset, true);
   };
 
   const hasNext = gifs.length < totalCount;
