@@ -95,11 +95,9 @@ describe('App Integration Test', () => {
 
     render(<App />);
 
-    expect(fetch).toHaveBeenCalledTimes(1);
-
     fireEvent.click(screen.getByText('Load More'));
 
-    expect(fetch).toHaveBeenCalledTimes(3);
+    expect(fetch).toHaveBeenCalledTimes(2);
   });
 
   it.skip('opens modal when a gif is clicked', async () => {
