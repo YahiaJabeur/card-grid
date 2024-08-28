@@ -67,7 +67,6 @@ export const Grid = ({ gifs, onCardClick }: GridProps) => (
           src={gif.images.original.url}
           alt={gif.title || 'GIF'}
           onError={(e) => (e.currentTarget.src = '../assets/placeholder.png')}
-          loading="lazy"
         />
         <TitleContainer>
           <Title>{gif.title || 'Untitled'}</Title>
